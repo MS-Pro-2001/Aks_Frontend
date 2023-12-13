@@ -99,7 +99,7 @@ const UserDetailsPage = () => {
                     component="nav"
                     aria-labelledby="nested-list-subheader"
                     subheader={
-                        <ListSubheader style={{ background: '#1976d2', borderRadius: '20px 20px 0px 0px', color: 'white' }} component="div" id="nested-list-subheader">
+                        <ListSubheader style={{ background: '#1976d2', position: 'relative', borderRadius: '20px 20px 0px 0px', color: 'white' }} component="div" id="nested-list-subheader">
                             Primary Details
                         </ListSubheader>
                     }
@@ -135,8 +135,11 @@ const UserDetailsPage = () => {
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={
-                            <ListSubheader style={{ background: '#1976d2', borderRadius: '20px 20px 0px 0px', color: 'white' }} component="div" id="nested-list-subheader">
-                                Family Details
+                            <ListSubheader style={{ background: '#1976d2', borderRadius: '20px 20px 0px 0px', color: 'white', display: 'flex', justifyContent: 'space-between' }} component="div" id="nested-list-subheader">
+                                <div style={{ flex: '1' }}>
+                                    Family Details
+                                </div>
+                                <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }} >Date of Birth </div>
                             </ListSubheader>
                         }
                     >
@@ -147,9 +150,9 @@ const UserDetailsPage = () => {
                                 <ListItemText primary={item?.name_of_member} secondary={item?.relationship_with_user} />
                                 <ListItemText />
                                 <ListItemText />
-                                <ListItemText />
-                                <ListItemText />
-                                <ListItemText primary={item?.dob} />
+
+
+                                <ListItemText primary={item?.dob.slice(0, 10)} />
 
 
                             </ListItemButton>

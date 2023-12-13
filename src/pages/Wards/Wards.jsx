@@ -1,13 +1,14 @@
 import { Divider, IconButton, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import "./Wards.css"
 
 const Wards = () => {
 
     const [query, setQuery] = useState("")
+    const navigate = useNavigate()
 
 
     const wards = [
@@ -57,30 +58,30 @@ const Wards = () => {
                                     wards?.filter((val) => val.toLowerCase().includes(query)).map((item) =>
 
                                         <div key={item}>
-                                            <NavLink style={{ textDecoration: 'none' }} to={`/userList/${item.toLowerCase()}`} >
-
-                                                <ListItem
-
-                                                    secondaryAction={
-                                                        <IconButton edge="end" aria-label="delete">
-
-                                                            <ArrowForwardIosIcon />
-
-                                                        </IconButton>
-                                                    }
-
-                                                    disablePadding >
-                                                    <ListItemButton>
 
 
-                                                        <ListItemText primary={item} />
+                                            <ListItem
+                                                onClick={() => navigate(`/userList/${item.toLowerCase()}`)}
+                                                secondaryAction={
+                                                    <IconButton edge="end" aria-label="delete">
+
+                                                        <ArrowForwardIosIcon />
+
+                                                    </IconButton>
+                                                }
+
+                                                disablePadding >
+                                                <ListItemButton>
+
+
+                                                    <ListItemText primary={item} />
 
 
 
 
-                                                    </ListItemButton>
-                                                </ListItem>
-                                            </NavLink>
+                                                </ListItemButton>
+                                            </ListItem>
+
 
                                             <Divider />
 

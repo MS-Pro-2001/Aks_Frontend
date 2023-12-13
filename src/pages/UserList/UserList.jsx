@@ -1,12 +1,11 @@
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { NavLink } from 'react-router-dom';
 import { MyContext } from '../../ContextAPI';
 // import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -19,7 +18,7 @@ const UserList = () => {
 
     const { allUsers } = useContext(MyContext)
 
-
+    const navigate = useNavigate()
 
     const [query, setQuery] = useState("")
 
@@ -65,39 +64,40 @@ const UserList = () => {
                                     wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query)).map((item) =>
 
                                         <div key={item?._id}>
-                                            <NavLink style={{ textDecoration: 'none' }} to={`/userDetail/${item?._id}`} >
-
-                                                <ListItem
-
-                                                    secondaryAction={
-                                                        <IconButton edge="end" aria-label="delete">
-
-                                                            <a href={"tel:" + item?.phone_no}>
-                                                                <CallIcon />
-
-                                                            </a>
 
 
-                                                        </IconButton>
-                                                    }
+                                            <ListItem
 
-                                                    disablePadding >
-                                                    <ListItemButton>
-                                                        <ListItemIcon>
-                                                            <ListItemAvatar>
-                                                                <Avatar alt="Remy Sharp" src={item?.image} />
-                                                            </ListItemAvatar>
+                                                secondaryAction={
+                                                    <IconButton edge="end" aria-label="delete">
 
-                                                        </ListItemIcon>
+                                                        <a href={"tel:" + item?.phone_no}>
+                                                            <CallIcon />
 
-                                                        <ListItemText primary={item?.firstName} secondary={item?.designation} />
+                                                        </a>
 
 
+                                                    </IconButton>
+                                                }
+
+                                                disablePadding >
+                                                <ListItemButton >
+                                                    <ListItemIcon >
+                                                        <ListItemAvatar>
+                                                            <Avatar alt="Remy Sharp" src={item?.image} />
+                                                        </ListItemAvatar>
+
+                                                    </ListItemIcon>
 
 
-                                                    </ListItemButton>
-                                                </ListItem>
-                                            </NavLink>
+                                                    <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item?.designation} />
+
+
+
+
+
+                                                </ListItemButton>
+                                            </ListItem>
 
                                             <Divider />
 

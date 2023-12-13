@@ -38,3 +38,13 @@
     font-size: 12px;
     outline: none;
 }
+
+.list {
+
+    padding: 0;
+    margin: 0;
+}
+
+.total_entries {
+    margin-left: 40px;
+}

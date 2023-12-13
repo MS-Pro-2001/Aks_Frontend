@@ -1,10 +1,8 @@
 import { Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
-import { NavLink } from 'react-router-dom';
-import { MyContext } from '../../ContextAPI';
 import "./AksDirectory.css"
 
 
@@ -64,39 +62,38 @@ const AksDirectory = () => {
                 aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).map((item) =>
 
                   <div key={item?._id}>
-                    <NavLink style={{ textDecoration: 'none' }}  >
-
-                      <ListItem
-
-                        secondaryAction={
-                          <IconButton edge="end" aria-label="delete">
-
-                            <a href={"tel:" + item?.Contact_number}>
-                              <CallIcon />
-
-                            </a>
 
 
-                          </IconButton>
-                        }
+                    <ListItem
 
-                        disablePadding >
-                        <ListItemButton>
-                          <ListItemIcon>
-                            <ListItemAvatar>
-                              <Avatar alt="Remy Sharp" src={item?.image} />
-                            </ListItemAvatar>
+                      secondaryAction={
+                        <IconButton edge="end" aria-label="delete">
 
-                          </ListItemIcon>
+                          <a href={"tel:" + item?.Contact_number}>
+                            <CallIcon />
 
-                          <ListItemText primary={item?.Name} secondary={item?.Designation} />
+                          </a>
 
 
+                        </IconButton>
+                      }
+
+                      disablePadding >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <ListItemAvatar>
+                            <Avatar alt="Remy Sharp" src={item?.image} />
+                          </ListItemAvatar>
+
+                        </ListItemIcon>
+
+                        <ListItemText primary={item?.Name} secondary={item?.Designation} />
 
 
-                        </ListItemButton>
-                      </ListItem>
-                    </NavLink>
+
+
+                      </ListItemButton>
+                    </ListItem>
 
                     <Divider />
 

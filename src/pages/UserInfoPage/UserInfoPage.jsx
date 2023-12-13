@@ -20,7 +20,8 @@ import CustomizedSnackbars from '../../components/CustomSnackBar';
 import dayjs from 'dayjs';
 import CircularProgress from '@mui/material/CircularProgress';
 
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Avatar } from '@mui/material';
 const StyledMenu = styled((props) => (
     <Menu
         elevation={0}
@@ -207,12 +208,14 @@ export default function Userinfopage() {
 
                 }, 3000);
 
+                if (data.success) {
 
 
-                setTimeout(() => {
-                    navigate('/home')
+                    setTimeout(() => {
+                        navigate('/home')
 
-                }, 6000);
+                    }, 6000);
+                }
 
             }).catch(err =>
                 console.log(err)
@@ -244,9 +247,9 @@ export default function Userinfopage() {
                         alignItems: 'center',
                     }}
                 >
-                    {/* <div>
-                        <img src={logo} alt="" width={100} height={100} />
-                    </div> */}
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <AccountCircleIcon />
+                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Your Details
                     </Typography>
@@ -323,6 +326,7 @@ export default function Userinfopage() {
                             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer components={['DatePicker']}>
+
                                         <DatePicker value={dayjs(details?.dob)} required onChange={(e) => setDetails({ ...details, dob: `${(e.$M + 1) < 10 ? '0' + (e.$M + 1) : (e.$M + 1)}-${e.$D < 10 ? '0' + e.$D : e.$D}-${e.$y}` })} format="MM/DD/YYYY" label="Date of birth" />
 
                                     </DemoContainer>

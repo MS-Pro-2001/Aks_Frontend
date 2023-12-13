@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
-import ResponsiveAppBar from './components/AppBar/AppBar';
+import ResponsiveAppBar from './components/AppBar/AppBar_test';
 import { useEffect, useState } from 'react';
 import Wards from './pages/Wards/Wards';
 import UserList from './pages/UserList/UserList';
@@ -38,7 +38,8 @@ function App() {
         await fetch("https://aks-backend.onrender.com/api/user/fetchallusers", {
           method: 'GET', headers: {
             'Content-type': 'application/json'
-          }
+          },
+
         }).then(async (res) => {
           const allUsers = await res.json();
           setAllUsers(allUsers)
@@ -78,6 +79,7 @@ function App() {
             <BrowserRouter>
               <MyContext.Provider value={{ allUsers, loggedInUserDetails, setLoggedInUserDetails, setLoggedIn, loggedIn }}>
                 {loggedIn || localStorage.getItem("userId") !== null ? <ResponsiveAppBar /> : <></>}
+                {/* <ResponsiveAppBar /> */}
                 <CustomizedSnackbars flag={flag} setFlag={setFlag} msg={message} errorType={errorType} />
                 <Routes>
                   <Route path="/" element={<LoginPage />} />
@@ -101,6 +103,7 @@ function App() {
             <BrowserRouter>
               <MyContext.Provider value={{ setLoggedInUserDetails, setLoggedIn, loggedIn }}>
                 {/* {loggedIn || localStorage.getItem("userId") !== null ? <ResponsiveAppBar /> : <></>} */}
+                {/* <ResponsiveAppBar /> */}
                 <CustomizedSnackbars flag={flag} setFlag={setFlag} msg={message} errorType={errorType} />
                 <Routes>
                   <Route path="/" element={<LoginPage />} />

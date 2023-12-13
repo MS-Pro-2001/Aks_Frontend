@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
-import { NavLink } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import "./aksOfficeBearers.css"
@@ -55,68 +54,68 @@ const AksOfficeBearers = () => {
 
       <div className="list">
         <div className="total_entries">showing  {aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).length} entries</div>
-        <div className="list-items">
+        <div className="list-items" >
 
 
-          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-
-
-
-
-            <List>
-              {
-                aksDirectory?.length === 0 ?
-                  <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                    <CircularProgress />
-                  </Box>
-                  :
-
-
-                  aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).map((item) =>
-
-                    <div key={item?.Name}>
-                      <NavLink style={{ textDecoration: 'none' }}  >
-
-                        <ListItem
-
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-
-                              <a href={"tel:" + item?.Contact_number}>
-                                <CallIcon />
-
-                              </a>
-
-
-                            </IconButton>
-                          }
-
-                          disablePadding >
-                          <ListItemButton>
-                            <ListItemIcon>
-                              <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src={item?.image} />
-                              </ListItemAvatar>
-
-                            </ListItemIcon>
-
-                            <ListItemText primary={item?.Name} secondary={item?.Designation} />
+          <List>
 
 
 
 
-                          </ListItemButton>
-                        </ListItem>
-                      </NavLink>
 
-                      <Divider />
-
-                    </div>
-                  )
-              }
+            {
+              aksDirectory?.length === 0 ?
+                <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </Box>
+                :
 
 
-            </List>
+                aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).map((item) =>
+
+                  <div key={item?.Name}>
+
+
+                    <ListItem
+
+                      secondaryAction={
+                        <IconButton edge="end" aria-label="delete">
+
+                          <a href={"tel:" + item?.Contact_number}>
+                            <CallIcon />
+
+                          </a>
+
+
+                        </IconButton>
+                      }
+
+                      disablePadding >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <ListItemAvatar>
+                            <Avatar alt="Remy Sharp" src={item?.image} />
+                          </ListItemAvatar>
+
+                        </ListItemIcon>
+
+                        <ListItemText primary={item?.Name} secondary={item?.Designation} />
+
+
+
+
+                      </ListItemButton>
+                    </ListItem>
+
+
+                    <Divider />
+
+                  </div>
+                )
+            }
+
+
+
 
           </List>
         </div>

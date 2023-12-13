@@ -106,7 +106,7 @@ export default function LoginPage() {
             setLoggedIn(true)
             localStorage.setItem("userId", JSON.stringify(data.user._id))
             setLoggedInUserDetails(data.user)
-            setIsLoading(true)
+
 
 
           }, 4000);

@@ -5,12 +5,14 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useMemo } from 'react';
 
 
 const HomeScreen = () => {
   const [currentDate] = React.useState(new Date());
   const navigate = useNavigate();
   const [details, setDetails] = React.useState("")
+
 
 
 
@@ -69,6 +71,7 @@ const HomeScreen = () => {
 
           const data = await res.json();
           setDetails(data?.firstName)
+
         }).catch(err =>
           console.log(err)
         )
@@ -90,9 +93,11 @@ const HomeScreen = () => {
 
 
 
+
+
   return (
     <Container maxWidth="sm" >
-      <Typography sx={{ m: 2 }}>Welcome!! {details.toUpperCase()}</Typography>
+      <Typography sx={{ m: 2 }}>Welcome!! {details}</Typography>
 
       <Card variant="outlined" sx={{ mb: 2 }}>{card}</Card>
 
