@@ -188,7 +188,7 @@ export default function SignUpPage() {
             setLoggedInUserDetails(data.user)
             setIsLoading(false)
 
-          }, 4000);
+          }, 1000);
 
         }
 

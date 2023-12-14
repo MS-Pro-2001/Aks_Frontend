@@ -1,11 +1,15 @@
 import { Divider, IconButton, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import "./Wards.css"
 
 const Wards = () => {
+
+    const { state } = useLocation()
+    console.log(state)
+
 
     const [query, setQuery] = useState("")
     const navigate = useNavigate()
@@ -43,7 +47,7 @@ const Wards = () => {
                 </div>
 
                 <div className="list">
-                    <div className="total_entries">showing  {wards?.filter((val) => val.toLowerCase().includes(query)).length} entries</div>
+                    <div className="total_entries">showing  {wards?.filter((val) => val.toLowerCase().includes(query.toLowerCase())).length} entries</div>
                     <div className="list-items">
 
 
@@ -55,13 +59,13 @@ const Wards = () => {
                             <List>
                                 {
 
-                                    wards?.filter((val) => val.toLowerCase().includes(query)).map((item) =>
+                                    wards?.filter((val) => val.toLowerCase().includes(query.toLowerCase())).map((item) =>
 
                                         <div key={item}>
 
 
                                             <ListItem
-                                                onClick={() => navigate(`/userList/${item.toLowerCase()}`)}
+                                                onClick={() => navigate(`/${state}/${item.toLowerCase()}`)}
                                                 secondaryAction={
                                                     <IconButton edge="end" aria-label="delete">
 

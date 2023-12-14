@@ -1,39 +1,52 @@
 
 import { Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import "./aksOfficeBearers.css"
+// import "./aksOfficeBearers.css"
+import { MyContext } from '../../ContextAPI';
+import { useNavigate } from 'react-router-dom';
 
 
 const AksOfficeBearers = () => {
+  const navigate = useNavigate()
 
   const [query, setQuery] = useState("")
 
-  const [aksDirectory, setAksDirectory] = useState([])
+  // const [aksDirectory, setAksDirectory] = useState([])
+  const { allUsers } = useContext(MyContext)
 
-  useEffect(() => {
-    (async () => {
-
-      await fetch("https://sheetdb.io/api/v1/c2id24dx91yp0", {
-        method: 'GET', headers: {
-          'Content-type': 'application/json'
-        }
-      }).then(async (res) => {
-        const aksComitteeData = await res.json();
-        setAksDirectory(aksComitteeData)
-      }).catch((error => {
-        console.log(error)
+  // console.log(allUsers)
 
 
-      }))
+  // useEffect(() => {
+  //   (async () => {
 
-    })()
+  //     await fetch("https://sheetdb.io/api/v1/c2id24dx91yp0", {
+  //       method: 'GET', headers: {
+  //         'Content-type': 'application/json'
+  //       }
+  //     }).then(async (res) => {
+  //       const aksComitteeData = await res.json();
+  //       setAksDirectory(aksComitteeData)
+  //     }).catch((error => {
+  //       console.log(error)
 
-  }, [])
+
+  //     }))
+
+  //   })()
+
+  // }, [])
+
+
+  const designationWiseFilteredData = allUsers.filter((item) => {
+    return item.designation !== "member"
+  })
+
 
 
 
@@ -53,7 +66,7 @@ const AksOfficeBearers = () => {
       </div>
 
       <div className="list">
-        <div className="total_entries">showing  {aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).length} entries</div>
+        <div className="total_entries">showing  {designationWiseFilteredData?.filter(user => user.firstName.toLowerCase().includes(query.toLowerCase()) || user.designation.toLowerCase().includes(query.toLowerCase())).length} entries</div>
         <div className="list-items" >
 
 
@@ -64,16 +77,16 @@ const AksOfficeBearers = () => {
 
 
             {
-              aksDirectory?.length === 0 ?
+              designationWiseFilteredData?.length === 0 ?
                 <Box style={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress />
                 </Box>
                 :
 
 
-                aksDirectory?.filter(user => user.Name.toLowerCase().includes(query)).map((item) =>
+                designationWiseFilteredData?.filter(user => user.firstName.toLowerCase().includes(query.toLowerCase()) || user.designation.toLowerCase().includes(query.toLowerCase())).map((item) =>
 
-                  <div key={item?.Name}>
+                  <div key={item?._id}>
 
 
                     <ListItem
@@ -81,7 +94,7 @@ const AksOfficeBearers = () => {
                       secondaryAction={
                         <IconButton edge="end" aria-label="delete">
 
-                          <a href={"tel:" + item?.Contact_number}>
+                          <a href={"tel:" + item?.phone_no}>
                             <CallIcon />
 
                           </a>
@@ -99,7 +112,7 @@ const AksOfficeBearers = () => {
 
                         </ListItemIcon>
 
-                        <ListItemText primary={item?.Name} secondary={item?.Designation} />
+                        <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item?.designation} />
 
 
 

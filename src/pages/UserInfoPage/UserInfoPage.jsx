@@ -118,7 +118,8 @@ export default function Userinfopage() {
         phone_no: '',
         ward: '',
         address: '',
-        dob: ''
+        dob: '',
+        designation: ''
 
 
     })
@@ -206,7 +207,7 @@ export default function Userinfopage() {
                     setIsLoading(false)
                     setFlag(true)
 
-                }, 3000);
+                }, 1000);
 
                 if (data.success) {
 
@@ -214,7 +215,7 @@ export default function Userinfopage() {
                     setTimeout(() => {
                         navigate('/home')
 
-                    }, 6000);
+                    }, 2000);
                 }
 
             }).catch(err =>
@@ -321,6 +322,22 @@ export default function Userinfopage() {
                                     onChange={(e) => handleDetails(e)}
                                 />
                             </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+
+                                    fullWidth
+                                    name="designation"
+                                    label="Designation"
+                                    type="designation"
+                                    id="designation"
+
+                                    disabled
+                                    autoComplete="new-designation"
+                                    value={details?.designation}
+
+                                />
+                            </Grid>
+
 
 
                             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -332,6 +349,7 @@ export default function Userinfopage() {
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </Grid>
+
 
                             <Grid item xs={12} >
 

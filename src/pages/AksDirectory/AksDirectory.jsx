@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
-import "./AksDirectory.css"
+// import "./AksDirectory.css"
+import { useLocation } from 'react-router-dom';
 
 
 const AksDirectory = () => {
+
+
 
 
   const [query, setQuery] = useState("")

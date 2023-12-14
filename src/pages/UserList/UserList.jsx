@@ -23,6 +23,7 @@ const UserList = () => {
     const [query, setQuery] = useState("")
 
 
+
     const wardWiseFilteredData = allUsers.filter((item) => {
         return item.ward === ward_name
     })
@@ -44,7 +45,7 @@ const UserList = () => {
             </div>
 
             <div className="list">
-                <div className="total_entries">showing  {wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query))?.length} entries</div>
+                <div className="total_entries">showing  {wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLowerCase()))?.length} entries</div>
                 <div className="list-items">
 
 
@@ -61,7 +62,7 @@ const UserList = () => {
                                     </Box>
                                     :
 
-                                    wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query)).map((item) =>
+                                    wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLocaleLowerCase())).map((item) =>
 
                                         <div key={item?._id}>
 
@@ -90,7 +91,7 @@ const UserList = () => {
                                                     </ListItemIcon>
 
 
-                                                    <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item?.designation} />
+                                                    <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={"member"} />
 
 
 

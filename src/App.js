@@ -14,6 +14,7 @@ import { MyContext } from './ContextAPI';
 import CustomizedSnackbars from './components/CustomSnackBar';
 import AddFamilyDetailsPage from './pages/AddFamilyDetailPage/AddFamilyDetailsPage';
 import AksOfficeBearers from './pages/Aks_office_bearers/AksOfficeBearers';
+import AksWardCommittee from './pages/AksWardCommittee/AksWardCommittee';
 
 function App() {
 
@@ -85,7 +86,7 @@ function App() {
                   <Route path="/" element={<LoginPage />} />
                   <Route path="/signup" element={<SignUpPage />} />
                   <Route path="/home" element={<Home />} />
-                  {/* <Route path="/officebearers" element={<SearchBar />} /> */}
+                  <Route path="/wardcommittee/:ward_name" element={<AksWardCommittee />} />
                   <Route path="/officebearers" element={<AksOfficeBearers />} />
                   <Route path="/wards" element={<Wards />} />
                   <Route path="/userlist/:ward_name" element={<UserList />} />

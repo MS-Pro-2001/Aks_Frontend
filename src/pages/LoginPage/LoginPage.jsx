@@ -100,16 +100,14 @@ export default function LoginPage() {
 
 
         if (data.success) {
-
-
           setTimeout(() => {
-            setLoggedIn(true)
-            localStorage.setItem("userId", JSON.stringify(data.user._id))
             setLoggedInUserDetails(data.user)
+            localStorage.setItem("userId", JSON.stringify(data.user._id))
+            setLoggedIn(true)
+            setIsLoading(false)
 
 
-
-          }, 4000);
+          }, 1000);
 
         }
 

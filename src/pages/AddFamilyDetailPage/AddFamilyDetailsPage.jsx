@@ -71,7 +71,7 @@ export default function AddFamilyDetailsPage() {
                     setIsLoading(false)
                     setFlag(true)
 
-                }, 3000);
+                }, 1000);
 
                 if (data.success) {
 
@@ -79,7 +79,7 @@ export default function AddFamilyDetailsPage() {
                     setTimeout(() => {
                         navigate('/home')
 
-                    }, 6000);
+                    }, 2000);
                 }
 
             }).catch(err =>

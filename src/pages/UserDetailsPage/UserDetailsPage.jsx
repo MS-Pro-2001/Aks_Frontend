@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { MyContext } from '../../ContextAPI'
 import ListSubheader from '@mui/material/ListSubheader';
@@ -10,18 +10,23 @@ import ListItemText from '@mui/material/ListItemText';
 import PersonIcon from '@mui/icons-material/Person';
 import RoomIcon from '@mui/icons-material/Room';
 import CallIcon from '@mui/icons-material/Call';
+import { Button, CircularProgress } from '@mui/material';
 
 
 const UserDetailsPage = () => {
     const { user_id } = useParams()
     const { allUsers } = useContext(MyContext)
     const [familyDetails, setFamilyDetails] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
+    const navigate = useNavigate()
 
 
     useEffect(() => {
 
+
         (async () => {
+            setIsLoading(true)
             await fetch("https://aks-backend.onrender.com/api/user/fetchFamilyDetails", {
                 method: 'POST',
 
@@ -37,6 +42,8 @@ const UserDetailsPage = () => {
                 .then(async (res) => {
                     const data = await res.json()
                     setFamilyDetails(data)
+                    setIsLoading(false)
+
 
 
                 })
@@ -45,7 +52,7 @@ const UserDetailsPage = () => {
     }, [user_id])
 
 
-
+    console.log(isLoading)
     const mainUser = allUsers.filter((item) => {
 
         return item._id === user_id;
@@ -127,42 +134,67 @@ const UserDetailsPage = () => {
 
             </div>
 
-            {familyDetails.length !== 0 ?
-                <div style={{ margin: '20px 20px' }}>
-                    <List
-
-                        sx={{ width: '100%', boxShadow: '1px 1px 1px 1px  lightgrey', borderRadius: '20px' }}
-                        component="nav"
-                        aria-labelledby="nested-list-subheader"
-                        subheader={
-                            <ListSubheader style={{ background: '#1976d2', borderRadius: '20px 20px 0px 0px', color: 'white', display: 'flex', justifyContent: 'space-between' }} component="div" id="nested-list-subheader">
-                                <div style={{ flex: '1' }}>
-                                    Family Details
-                                </div>
-                                <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }} >Date of Birth </div>
-                            </ListSubheader>
-                        }
-                    >
-                        {familyDetails.map((item) =>
-
-                            <ListItemButton key={item._id}>
-
-                                <ListItemText primary={item?.name_of_member} secondary={item?.relationship_with_user} />
-                                <ListItemText />
-                                <ListItemText />
+            {!isLoading ? <>
 
 
-                                <ListItemText primary={item?.dob.slice(0, 10)} />
+                {familyDetails.length !== 0 &&
 
 
-                            </ListItemButton>
-                        )}
 
 
-                    </List>
-                </div> : <></>
+                    <div style={{ margin: '20px 20px' }}>
+                        <List
 
+                            sx={{ width: '100%', boxShadow: '1px 1px 1px 1px  lightgrey', borderRadius: '20px' }}
+                            component="nav"
+                            aria-labelledby="nested-list-subheader"
+                            subheader={
+                                <ListSubheader style={{ background: '#1976d2', borderRadius: '20px 20px 0px 0px', color: 'white', display: 'flex', justifyContent: 'space-between' }} component="div" id="nested-list-subheader">
+                                    <div style={{ flex: '1' }}>
+                                        Family Details
+                                    </div>
+                                    <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }} >Date of Birth </div>
+                                </ListSubheader>
+                            }
+                        >
+
+
+                            {familyDetails.map((item) =>
+
+                                <ListItemButton key={item._id}>
+
+                                    <ListItemText primary={item?.name_of_member} secondary={item?.relationship_with_user} />
+                                    <ListItemText />
+                                    <ListItemText />
+
+
+                                    <ListItemText primary={item?.dob.slice(0, 10)} />
+
+
+                                </ListItemButton>
+                            )}
+
+
+
+
+
+                        </List >
+                    </div >
+                }
+
+            </> :
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <CircularProgress color="inherit" />
+                </div>}
+
+
+
+            {
+                familyDetails.length === 0 && <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Button onClick={() => navigate("/familydetails")} variant='contained'>+ Add Family details</Button>
+                </div>
             }
+
 
         </>
 

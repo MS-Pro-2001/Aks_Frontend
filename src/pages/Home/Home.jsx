@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { useMemo } from 'react';
+
 
 
 const HomeScreen = () => {
@@ -37,16 +37,20 @@ const HomeScreen = () => {
   let btnArrJson = [
     {
       "name": "AKS Directory",
-      "navigate": "wards"
+      "navigate": "wards",
+      "state": "userList"
+
     },
 
     {
       "name": "AKS Ward Comittee Members ",
-      "navigate": "wards"
+      "navigate": "wards",
+      "state": "wardCommittee"
     },
     {
       "name": "AKS Office Bearers",
-      "navigate": "officebearers"
+      "navigate": "officebearers",
+      "state": "bearers"
     }
   ]
 
@@ -105,7 +109,7 @@ const HomeScreen = () => {
       <Box sx={{ width: '70%', margin: 'auto' }}>
         <Stack spacing={5}>
           {btnArrJson?.map((item) =>
-            <Button key={item?.name} variant='contained' onClick={() => navigate(`/${item?.navigate}`)}>{item?.name}</Button>
+            <Button key={item?.name} variant='contained' onClick={() => navigate(`/${item?.navigate}`, { state: `${item.state}` })}>{item?.name}</Button>
           )
 
           }
