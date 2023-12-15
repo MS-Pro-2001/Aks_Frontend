@@ -17,15 +17,15 @@ import { useNavigate } from 'react-router-dom';
 import { MyContext } from '../../ContextAPI';
 
 
-const pages = [{ 'name': 'Home', 'navigateLocation': '/home' }, { 'name': 'logout', 'navigateLocation': '/' }];
-const settings = [{ 'name': 'Profile', 'navigateLocation': '/userinfopage' }, { 'name': 'Add Family Member', 'navigateLocation': '/familydetails' }];
+const pages = [{ 'name': 'Home', 'navigateLocation': '/home' }, { 'name': 'Profile', 'navigateLocation': '/userinfopage' }, { 'name': 'logout', 'navigateLocation': '/' }];
+const settings = [{ 'name': 'Add Family Member', 'navigateLocation': '/familydetails' }];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const navigate = useNavigate()
-    const { setLoggedIn } = React.useContext(MyContext)
+    const { setLoggedIn, allUsers } = React.useContext(MyContext)
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -47,6 +47,13 @@ function ResponsiveAppBar() {
         setAnchorElUser(null);
         navigate(setting.navigateLocation)
     };
+
+    const currentLoggedInUser = allUsers.filter((item) => {
+        return item._id === JSON.parse(localStorage.getItem("userId"))
+    })
+
+
+
 
     return (
         <AppBar position="static">
@@ -141,7 +148,7 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         {localStorage.getItem("userId") && <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Remy Sharp" src={currentLoggedInUser[0]?.familyPhoto} />
                             </IconButton>
                         </Tooltip>}
                         <Menu

@@ -1,49 +1,47 @@
 
 import { Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-// import "./aksOfficeBearers.css"
-import { MyContext } from '../../ContextAPI';
-import { useNavigate } from 'react-router-dom';
+
+
 
 
 const AksOfficeBearers = () => {
-  const navigate = useNavigate()
+
 
   const [query, setQuery] = useState("")
 
-  // const [aksDirectory, setAksDirectory] = useState([])
-  const { allUsers } = useContext(MyContext)
-
-  // console.log(allUsers)
+  const [aksDirectory, setAksDirectory] = useState([])
 
 
-  // useEffect(() => {
-  //   (async () => {
 
-  //     await fetch("https://sheetdb.io/api/v1/c2id24dx91yp0", {
-  //       method: 'GET', headers: {
-  //         'Content-type': 'application/json'
-  //       }
-  //     }).then(async (res) => {
-  //       const aksComitteeData = await res.json();
-  //       setAksDirectory(aksComitteeData)
-  //     }).catch((error => {
-  //       console.log(error)
+  useEffect(() => {
+    (async () => {
 
+      await fetch("https://sheetdb.io/api/v1/c2id24dx91yp0", {
+        method: 'GET', headers: {
+          'Content-type': 'application/json'
+        }
+      }).then(async (res) => {
+        const aksComitteeData = await res.json();
+        setAksDirectory(aksComitteeData)
 
-  //     }))
-
-  //   })()
-
-  // }, [])
+      }).catch((error => {
+        console.log(error)
 
 
-  const designationWiseFilteredData = allUsers.filter((item) => {
+      }))
+
+    })()
+
+  }, [])
+
+
+  const designationWiseFilteredData = aksDirectory.filter((item) => {
     return item.designation !== "member"
   })
 
@@ -112,7 +110,7 @@ const AksOfficeBearers = () => {
 
                         </ListItemIcon>
 
-                        <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item?.designation} />
+                        <ListItemText primary={item?.firstName} secondary={item?.designation} />
 
 
 

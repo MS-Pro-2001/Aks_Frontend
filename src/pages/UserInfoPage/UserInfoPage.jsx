@@ -19,9 +19,10 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import CustomizedSnackbars from '../../components/CustomSnackBar';
 import dayjs from 'dayjs';
 import CircularProgress from '@mui/material/CircularProgress';
+import UploadIcon from '@mui/icons-material/Upload';
 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Avatar } from '@mui/material';
+import "./UserInfoPage.css"
+
 const StyledMenu = styled((props) => (
     <Menu
         elevation={0}
@@ -69,11 +70,29 @@ const defaultTheme = createTheme();
 
 export default function Userinfopage() {
 
+
     const navigate = useNavigate()
     const [flag, setFlag] = React.useState(false)
     const [message, setMessage] = React.useState("")
     const [errorType, setErrorType] = React.useState("")
     const [isLoading, setIsLoading] = React.useState(false)
+
+    const [familyImageURL, setFamilyImageURL] = useState("")
+
+    const [details, setDetails] = useState({
+
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone_no: '',
+        ward: '',
+        address: '',
+        dob: '',
+        designation: '',
+        familyPhoto: ''
+
+
+    })
 
 
 
@@ -93,6 +112,66 @@ export default function Userinfopage() {
         "Vejalpur",
     ]
 
+    const { firstName, lastName, email, phone_no, ward, address, dob, familyPhoto } = details
+
+
+    const handleUploadImage = () => {
+
+
+
+        var myWidget = window.cloudinary.createUploadWidget(
+            {
+                cloudName: "di3t7lflz",
+                uploadPreset: "igbzgkxx"
+            },
+            (error, result) => {
+                if (!error && result && result.event === "success") {
+                    setFamilyImageURL(result.info.url)
+
+                    try {
+
+                        (async () => {
+                            await fetch(`http://localhost:5000/api/user/updateUser`, {
+                                method: 'POST',
+
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    "user_id": JSON.parse(localStorage.getItem("userId")),
+                                    familyPhoto: result.info.url
+
+                                })
+
+                            }).catch(err => console.log(err))
+                        })
+                            ()
+
+
+
+                    } catch (error) {
+                        console.log(error)
+
+                    }
+                    console.log("done uploading")
+
+                }
+
+            }
+        );
+
+        myWidget.open();
+
+
+
+    }
+
+
+
+
+
+
+
 
 
 
@@ -110,19 +189,6 @@ export default function Userinfopage() {
     };
 
 
-    const [details, setDetails] = useState({
-
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone_no: '',
-        ward: '',
-        address: '',
-        dob: '',
-        designation: ''
-
-
-    })
 
 
     React.useEffect(() => {
@@ -165,7 +231,7 @@ export default function Userinfopage() {
     }, [])
 
 
-    const { firstName, lastName, email, phone_no, ward, address, dob } = details
+
 
     const handleDetails = (e) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
@@ -184,7 +250,7 @@ export default function Userinfopage() {
 
         try {
 
-            await fetch(`https://aks-backend.onrender.com/api/user/updateUser`, {
+            await fetch(`http://localhost:5000/api/user/updateUser`, {
                 method: 'POST',
 
                 headers: {
@@ -192,7 +258,7 @@ export default function Userinfopage() {
                 },
                 body: JSON.stringify({
                     "user_id": JSON.parse(localStorage.getItem("userId")),
-                    firstName, lastName, email, phone_no, ward, address, dob
+                    firstName, lastName, email, phone_no, ward, address, dob, familyPhoto
 
                 })
 
@@ -200,7 +266,7 @@ export default function Userinfopage() {
 
                 const data = await res.json();
 
-                // console.log(data.user.dob)
+                console.log(data)
                 setMessage(data.msg);
                 setErrorType(data.type)
                 setTimeout(() => {
@@ -248,10 +314,21 @@ export default function Userinfopage() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <AccountCircleIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
+
+
+
+
+                    {details?.familyPhoto && <div id="familyImage" >
+
+                        <div id="familyImage-container">
+                            <img src={familyImageURL ? familyImageURL : details?.familyPhoto} alt="familyImage" width={350} height={300} />
+                        </div>
+                    </div>}
+                    <Button sx={{ mt: 3 }} id="Uploadbtn" variant='outlined' onClick={handleUploadImage}>{details?.familyPhoto ? "Update" : "Upload"} Family Photo   <UploadIcon fontSize="medium" /></Button>
+
+
+
+                    <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                         Your Details
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>

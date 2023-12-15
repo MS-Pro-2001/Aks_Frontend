@@ -16,6 +16,7 @@ import AddFamilyDetailsPage from './pages/AddFamilyDetailPage/AddFamilyDetailsPa
 import AksOfficeBearers from './pages/Aks_office_bearers/AksOfficeBearers';
 import AksWardCommittee from './pages/AksWardCommittee/AksWardCommittee';
 
+
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
@@ -93,6 +94,8 @@ function App() {
                   <Route path="/userdetail/:user_id" element={<UserDetailsPage />} />
                   <Route path="/userinfopage" element={<UserInfoPage />} />
                   <Route path="/familydetails" element={<AddFamilyDetailsPage />} />
+
+
 
                   <Route path="*" element={<ErrorPage />} />
 
