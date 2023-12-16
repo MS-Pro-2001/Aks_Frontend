@@ -250,7 +250,7 @@ export default function Userinfopage() {
 
         try {
 
-            await fetch(`http://localhost:5000/api/user/updateUser`, {
+            await fetch(`https://aks-backend.onrender.com/api/user/updateUser`, {
                 method: 'POST',
 
                 headers: {
