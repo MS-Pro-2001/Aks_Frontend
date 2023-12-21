@@ -1,7 +1,7 @@
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import { CircularProgress, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
 import CallIcon from '@mui/icons-material/Call';
 import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,20 +16,36 @@ const AksWardCommittee = () => {
 
   const { ward_name } = useParams();
 
-  const { allUsers } = useContext(MyContext)
+  // const { allUsers } = useContext(MyContext)
 
   const navigate = useNavigate()
 
   const [query, setQuery] = useState("")
+  const [users, setUsers] = useState([])
+
+
+  useEffect(() => {
+
+    (async () => {
+      await fetch("https://sheetdb.io/api/v1/00wp3n251uvk6", { method: 'GET' })
+        .then(async (res) => {
+          const data = await res.json();
+          setUsers(data)
+        })
+
+    })()
+
+  }, [])
 
 
 
-  const wardWiseFilteredData = allUsers.filter((item) => {
-    return item.ward === ward_name
+
+  const wardWiseFilteredData = users.filter((item) => {
+    return item.ward.toLowerCase() === ward_name
   })
-  const designationWiseFilteredData = wardWiseFilteredData.filter((item) => {
-    return item.designation !== "member"
-  })
+  // const designationWiseFilteredData = wardWiseFilteredData.filter((item) => {
+  //   return item.designation !== "member"
+  // })
 
 
 
@@ -48,7 +64,7 @@ const AksWardCommittee = () => {
       </div>
 
       <div className="list">
-        <div className="total_entries">showing  {designationWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLowerCase()) || item?.designation.toLowerCase().includes(query.toLowerCase()))?.length} entries</div>
+        <div className="total_entries">showing  {wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLowerCase()) || item?.designation.toLowerCase().includes(query.toLowerCase()))?.length} entries</div>
         <div className="list-items">
 
 
@@ -59,13 +75,13 @@ const AksWardCommittee = () => {
 
             <List>
               {
-                designationWiseFilteredData?.length === 0 ?
+                wardWiseFilteredData?.length === 0 ?
                   <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                    No Users found
+                    <CircularProgress />
                   </Box>
                   :
 
-                  designationWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLowerCase()) || item?.designation.toLowerCase().includes(query.toLowerCase())).map((item) =>
+                  wardWiseFilteredData?.filter((item) => item?.firstName.toLowerCase().includes(query.toLowerCase()) || item?.designation.toLowerCase().includes(query.toLowerCase())).map((item) =>
 
                     <div key={item?._id}>
 
@@ -94,7 +110,8 @@ const AksWardCommittee = () => {
                           </ListItemIcon>
 
 
-                          <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item.designation} />
+                          {/* <ListItemText onClick={() => navigate(`/userDetail/${item?._id}`)} primary={item?.firstName} secondary={item.designation} /> */}
+                          <ListItemText primary={item?.firstName} secondary={item.designation} />
 
 
 
